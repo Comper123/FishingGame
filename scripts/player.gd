@@ -11,6 +11,7 @@ extends CharacterBody3D
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var cast_origin: Marker3D = $CameraPivot/CastOrigin
 
+var current_bobber: RigidBody3D = null     # Текущий поплавок
 
 var gravity: float = float(
 	ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -35,7 +36,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	if (event.is_action_pressed("cast") and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
-		cast_bobber()
+		if current_bobber == null:
+			cast_bobber()
+		else:
+			retrieve_bobber()
 
 
 func _physics_process(delta: float) -> void:
@@ -69,14 +73,30 @@ func handle_movement(delta: float) -> void:
 	velocity.z = move_toward(velocity.z, target_velocity.z, acceleration * delta)
 
 
+# Бросок поплавка
 func cast_bobber() -> void:
 	if bobber_scene == null:
 		push_warning("Bobber Scene не назначена")
 		return
 	
-	var bobber := bobber_scene.instantiate() as RigidBody3D
-	get_tree().current_scene.add_child(bobber)
-	bobber.global_position = cast_origin.global_position
+	current_bobber = bobber_scene.instantiate() as RigidBody3D
+	
+	get_tree().current_scene.add_child(current_bobber)
+	
+	current_bobber.global_position = cast_origin.global_position
+	current_bobber.global_rotation = cast_origin.global_rotation
 	
 	var forward := -cast_origin.global_basis.z
-	bobber.apply_central_impulse(forward * cast_force + Vector3.UP * cast_upward_force)
+	
+	current_bobber.apply_central_impulse(forward * cast_force + Vector3.UP * cast_upward_force)
+
+
+# Сматывание поплавка
+func retrieve_bobber() -> void:
+	if not is_instance_valid(current_bobber):
+		current_bobber = null
+		return
+	
+	current_bobber.queue_free()
+	current_bobber = null
+	
