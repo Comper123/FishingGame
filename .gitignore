@@ -1,0 +1,13 @@
+# Godot-generated files
+.godot/
+
+# Builds
+builds/
+
+# Editor and OS files
+.vscode/
+.idea/
+*.tmp
+Thumbs.db
+Desktop.ini
+

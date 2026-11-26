@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3]
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 1
+background_color = Color(0.55, 0.78, 0.94, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.72, 0.82, 0.9, 1)
+ambient_light_energy = 0.65
+
+[sub_resource type="StandardMaterial3D" id="Material_ground"]
+albedo_color = Color(0.22, 0.48, 0.2, 1)
+roughness = 0.92
+
+[sub_resource type="PlaneMesh" id="Mesh_ground"]
+material = SubResource("Material_ground")
+size = Vector2(40, 40)
+
+[sub_resource type="StandardMaterial3D" id="Material_water"]
+transparency = 1
+albedo_color = Color(0.08, 0.48, 0.72, 0.72)
+metallic = 0.05
+roughness = 0.18
+
+[sub_resource type="PlaneMesh" id="Mesh_water"]
+material = SubResource("Material_water")
+size = Vector2(18, 12)
+
+[sub_resource type="StandardMaterial3D" id="Material_dock"]
+albedo_color = Color(0.38, 0.2, 0.08, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="Mesh_dock"]
+material = SubResource("Material_dock")
+size = Vector3(3.2, 0.35, 7)
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-55, -28, 0)
+light_energy = 1.15
+shadow_enabled = true
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh_ground")
+
+[node name="Water" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.03, -3)
+mesh = SubResource("Mesh_water")
+
+[node name="Dock" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.24, 5.3)
+mesh = SubResource("Mesh_dock")
+
+[node name="Camera" type="Camera3D" parent="."]
+position = Vector3(10, 9, 15)
+rotation_degrees = Vector3(-24, 32, 0)
+current = true
+
