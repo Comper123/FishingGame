@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bnmbqf0vh2d0k" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="PackedScene" uid="uid://nd80c1xntqil" path="res://scenes/bobber.tscn" id="2_g2els"]
+[ext_resource type="Script" uid="uid://begayj0omo2" path="res://scripts/inventory/inventory_ui.gd" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://l006pwvfocv1" path="res://scripts/inventory/fishing_inventory.gd" id="3_qhqgy"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1vivr"]
 
@@ -41,3 +43,41 @@ theme_override_font_sizes/font_size = 24
 
 [node name="MessageTimer" type="Timer" parent="HUD" unique_id=2122942537]
 one_shot = true
+
+[node name="InventoryPanel" type="PanelContainer" parent="HUD" unique_id=1246194017 node_paths=PackedStringArray("inventory")]
+visible = false
+custom_minimum_size = Vector2(360, 420)
+offset_left = 30.0
+offset_top = 80.0
+offset_right = 246.0
+offset_bottom = 161.0
+script = ExtResource("3_dqkch")
+inventory = NodePath("../../FishingInventory")
+
+[node name="ContentMargin" type="MarginContainer" parent="HUD/InventoryPanel" unique_id=1600958309]
+layout_mode = 2
+
+[node name="Content" type="VBoxContainer" parent="HUD/InventoryPanel/ContentMargin" unique_id=2039609480]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="HUD/InventoryPanel/ContentMargin/Content" unique_id=1021318544]
+layout_mode = 2
+text = "Инвентарь"
+
+[node name="CapacityLabel" type="Label" parent="HUD/InventoryPanel/ContentMargin/Content" unique_id=1685214613]
+layout_mode = 2
+text = "Рыба: 0 / 20"
+
+[node name="FishScroll" type="ScrollContainer" parent="HUD/InventoryPanel/ContentMargin/Content" unique_id=1649032451]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FishList" type="VBoxContainer" parent="HUD/InventoryPanel/ContentMargin/Content/FishScroll" unique_id=136204287]
+layout_mode = 2
+
+[node name="HintLabel" type="Label" parent="HUD/InventoryPanel/ContentMargin/Content" unique_id=955944607]
+layout_mode = 2
+text = "Нажмите I, чтобы закрыть"
+
+[node name="FishingInventory" type="Node" parent="." unique_id=722294027]
+script = ExtResource("3_qhqgy")
