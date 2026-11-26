@@ -1,4 +1,5 @@
 extends RigidBody3D
+class_name Bobber
 
 signal bite_started    # событие, о котором позже сможет узнать игрок
 
@@ -18,6 +19,8 @@ enum FishingState {
 @export var min_bite_delay: float = 2.0
 @export var max_bite_delay: float = 6.0
 @export var bite_pull_speed: float = 2.5
+@export var bite_window_duration: float = 1.5   # Длительность поклевки
+
 @onready var bite_timer: Timer = $BiteTimer
 
 
@@ -73,15 +76,41 @@ func exit_water() -> void:
 	fishing_state = FishingState.FLYING
 	
 	
-# Функция поклевки
+# Обработчик таймера
 func _on_bite_timer_timeout() -> void:
+	match fishing_state:
+		FishingState.WAITING:
+			start_bite()
+		FishingState.BITE:
+			miss_bite()
+
+
+# Функция поклевки
+func start_bite() -> void:
 	if not is_in_water:
 		return
 	fishing_state = FishingState.BITE
 	sleeping = false
-	apply_central_impulse(
-		Vector3.DOWN * bite_pull_speed
-	)
+	apply_central_impulse(Vector3.DOWN * bite_pull_speed)
 	
 	bite_started.emit()
 	print("Поклевка!")
+	bite_timer.start(bite_window_duration)
+
+
+# Функция неудачной подсечки рыбы
+func miss_bite() -> void:
+	print("Рыба сорвалась!")
+	fishing_state = FishingState.WAITING
+	
+	var next_bite_delay := randf_range(min_bite_delay, max_bite_delay)
+	bite_timer.start(next_bite_delay)
+	
+
+# Проверка - клюет ли рыба прямо сейчас
+func try_hook() -> bool:
+	if fishing_state != FishingState.BITE:
+		return false
+	bite_timer.stop()
+	print("Успешная подсечка")
+	return true

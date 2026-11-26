@@ -11,7 +11,7 @@ extends CharacterBody3D
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var cast_origin: Marker3D = $CameraPivot/CastOrigin
 
-var current_bobber: RigidBody3D = null     # Текущий поплавок
+var current_bobber: Bobber = null     # Текущий поплавок
 
 var gravity: float = float(
 	ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -38,6 +38,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("cast") and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
 		if current_bobber == null:
 			cast_bobber()
+		elif current_bobber.try_hook():
+			catch_fish()
 		else:
 			retrieve_bobber()
 
@@ -79,7 +81,7 @@ func cast_bobber() -> void:
 		push_warning("Bobber Scene не назначена")
 		return
 	
-	current_bobber = bobber_scene.instantiate() as RigidBody3D
+	current_bobber = bobber_scene.instantiate() as Bobber
 	
 	get_tree().current_scene.add_child(current_bobber)
 	
@@ -99,4 +101,9 @@ func retrieve_bobber() -> void:
 	
 	current_bobber.queue_free()
 	current_bobber = null
-	
+
+
+# Поимка рыбы
+func catch_fish() -> void:
+	print("Рыба поймана!")
+	retrieve_bobber()
