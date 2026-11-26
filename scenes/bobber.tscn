@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://nd80c1xntqil"]
 
+[ext_resource type="Script" uid="uid://l1yrssys72s" path="res://scripts/bobber.gd" id="1_2wku4"]
+
 [sub_resource type="SphereMesh" id="SphereMesh_1vivr"]
 radius = 0.12
 height = 0.24
@@ -8,6 +10,7 @@ height = 0.24
 radius = 0.12
 
 [node name="Bobber" type="RigidBody3D" unique_id=1701012906]
+script = ExtResource("1_2wku4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1538926948]
 mesh = SubResource("SphereMesh_1vivr")

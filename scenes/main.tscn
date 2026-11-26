@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://blduas550oc8w"]
 
 [ext_resource type="PackedScene" uid="uid://qa3f1bcvhocq" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://gvl26j8fbok4" path="res://scripts/water_area.gd" id="2_0wfyh"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -77,6 +78,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
 
 [node name="WaterArea" type="Area3D" parent="." unique_id=1491217648]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.72, -3)
+script = ExtResource("2_0wfyh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WaterArea" unique_id=1105218411]
 shape = SubResource("BoxShape3D_8vrlf")
