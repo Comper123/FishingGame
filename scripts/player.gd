@@ -10,8 +10,11 @@ extends CharacterBody3D
 
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var cast_origin: Marker3D = $CameraPivot/CastOrigin
+@onready var catch_label: Label = $HUD/CatchLabel
+@onready var message_timer: Timer = $HUD/MessageTimer
 
 var current_bobber: Bobber = null     # Текущий поплавок
+var inventory: Dictionary = {}
 
 var gravity: float = float(
 	ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -20,6 +23,8 @@ var gravity: float = float(
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	catch_label.hide()
+	message_timer.timeout.connect(_on_message_timer_timeout)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -105,5 +110,21 @@ func retrieve_bobber() -> void:
 
 # Поимка рыбы
 func catch_fish() -> void:
-	print("Рыба поймана!")
+	var fish: Dictionary = FishCatalog.get_random_fish()
+	
+	var fish_name := String(fish["name"])
+	var fish_weight := randf_range(float(fish["min_weight"]), float(fish["max_weight"]))
+	inventory[fish_name] = int(inventory.get(fish_name, 0)) + 1
+	show_catch_message(fish_name, fish_weight)
+	print("Инвентарь", inventory)
 	retrieve_bobber()
+
+
+func show_catch_message(fish_name: String, fish_weight: float) -> void:
+	catch_label.text = "Поймана рыба: %s - %.2f кг" % [fish_name, fish_weight]
+	catch_label.show()
+	message_timer.start(3.0)
+
+func _on_message_timer_timeout() -> void:
+	catch_label.hide()
+	

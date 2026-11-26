@@ -29,3 +29,15 @@ current = true
 
 [node name="CastOrigin" type="Marker3D" parent="CameraPivot" unique_id=1998034374]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1682347772]
+
+[node name="CatchLabel" type="Label" parent="HUD" unique_id=303071745]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 70.0
+offset_bottom = 53.0
+theme_override_font_sizes/font_size = 24
+
+[node name="MessageTimer" type="Timer" parent="HUD" unique_id=2122942537]
+one_shot = true
