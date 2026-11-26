@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://blduas550oc8w"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -33,29 +33,27 @@ roughness = 0.8
 material = SubResource("Material_dock")
 size = Vector3(3.2, 0.35, 7)
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" unique_id=1177953344]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1569443520]
 environment = SubResource("Environment_main")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-rotation_degrees = Vector3(-55, -28, 0)
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1690055950]
+transform = Transform3D(0.88294756, 0.3845686, -0.26927784, 0, 0.57357645, 0.81915206, 0.46947157, -0.72326833, 0.50643796, 0, 0, 0)
 light_energy = 1.15
 shadow_enabled = true
 
-[node name="Ground" type="MeshInstance3D" parent="."]
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=1627933874]
 mesh = SubResource("Mesh_ground")
 
-[node name="Water" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.03, -3)
+[node name="Water" type="MeshInstance3D" parent="." unique_id=787918088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03, -3)
 mesh = SubResource("Mesh_water")
 
-[node name="Dock" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.24, 5.3)
+[node name="Dock" type="MeshInstance3D" parent="." unique_id=23551677]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24, 5.3)
 mesh = SubResource("Mesh_dock")
 
-[node name="Camera" type="Camera3D" parent="."]
-position = Vector3(10, 9, 15)
-rotation_degrees = Vector3(-24, 32, 0)
+[node name="Camera" type="Camera3D" parent="." unique_id=1645448339]
+transform = Transform3D(0.8480481, -0.21553758, 0.48410532, 0, 0.9135454, 0.40673664, -0.52991927, -0.34493223, 0.77473044, 10, 9, 15)
 current = true
-
