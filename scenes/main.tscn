@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://blduas550oc8w"]
 
+[ext_resource type="PackedScene" uid="uid://qa3f1bcvhocq" path="res://scenes/player.tscn" id="1_o5qli"]
+
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
 background_color = Color(0.55, 0.78, 0.94, 1)
@@ -33,6 +35,9 @@ roughness = 0.8
 material = SubResource("Material_dock")
 size = Vector3(3.2, 0.35, 7)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_1vivr"]
+size = Vector3(40, 0.2, 40)
+
 [node name="Main" type="Node3D" unique_id=1177953344]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1569443520]
@@ -57,3 +62,12 @@ mesh = SubResource("Mesh_dock")
 [node name="Camera" type="Camera3D" parent="." unique_id=1645448339]
 transform = Transform3D(0.8480481, -0.21553758, 0.48410532, 0, 0.9135454, 0.40673664, -0.52991927, -0.34493223, 0.77473044, 10, 9, 15)
 current = true
+
+[node name="GroundBody" type="StaticBody3D" parent="." unique_id=680172731]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundBody" unique_id=1843009946]
+shape = SubResource("BoxShape3D_1vivr")
+
+[node name="Player" parent="." unique_id=1836711902 instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
