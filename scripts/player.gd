@@ -70,6 +70,7 @@ func _physics_process(delta: float) -> void:
 		return
 	handle_jump()
 	handle_movement(delta)
+	handle_reeling(delta)
 	move_and_slide()
 
 
@@ -164,3 +165,10 @@ func _on_inventory_opened() -> void:
 
 func _on_inventory_closed() -> void:
 	is_gameplay_blocked = false
+	
+
+func handle_reeling(delta: float) -> void:
+	if not is_instance_valid(current_bobber):
+		return
+	if Input.is_action_just_pressed("reel_in"):
+		current_bobber.reel_in(reel_speed * delta)

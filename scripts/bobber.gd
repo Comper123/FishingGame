@@ -20,11 +20,14 @@ enum FishingState {
 @export var max_bite_delay: float = 6.0
 @export var bite_pull_speed: float = 2.5
 @export var bite_window_duration: float = 1.5   # Длительность поклевки
-
-@onready var bite_timer: Timer = $BiteTimer
-
+# Леска
 @export var line_stiffness: float = 20.0       # насколько сильно леска возвращает поплавок
 @export var line_damping: float = 3.0          # гашение колебаний
+@export var minimum_line_length: float = 1.5
+
+@onready var bite_timer: Timer = $BiteTimer
+@onready var line_visual: MeshInstance3D = $LineVisual
+
 
 var line_anchor: Node3D                 # точка, к которой привязана леска
 var line_data: LineData                 # экипированный вид лески
@@ -39,11 +42,19 @@ var defaul_angular_damp: float
 
 var fishing_state: FishingState = FishingState.FLYING
 
+var line_mesh: ImmediateMesh
+var line_material: StandardMaterial3D
+
 
 func _ready() -> void:
 	default_linear_damp = linear_damp
 	defaul_angular_damp = angular_damp
 	bite_timer.timeout.connect(_on_bite_timer_timeout)
+	setup_line_visual()
+
+
+func _process(delta: float) -> void:
+	update_line_visual()
 
 
 func _physics_process(delta: float) -> void:
@@ -149,3 +160,34 @@ func apply_line_tension() -> void:
 	var radial_velocity := linear_velocity.project(pull_direction)
 	var damping_force := (-radial_velocity * line_damping)
 	apply_central_force(spring_force + damping_force)
+
+
+func reel_in(amount: float) -> void:
+	released_line_length = maxf(minimum_line_length, released_line_length - amount)
+
+
+# Отображение лески
+func setup_line_visual() -> void:
+	line_mesh = ImmediateMesh.new()
+	line_visual.mesh = line_mesh
+	
+	line_material = StandardMaterial3D.new()
+	line_material.shading_mode = (BaseMaterial3D.SHADING_MODE_UNSHADED)
+	line_material.albedo_color = Color(0.85, 0.9, 0.85, 1.0)
+	line_visual.hide()
+
+
+# Обновление лески
+func update_line_visual() -> void:
+	if line_anchor == null:
+		line_visual.hide()
+		return
+	line_visual.show()
+	line_mesh.clear_surfaces()
+	line_mesh.surface_begin(Mesh.PRIMITIVE_LINES, line_material)
+	
+	var bobber_position := line_visual.to_local(global_position)
+	var anchor_position := line_visual.to_local(line_anchor.global_position)
+	line_mesh.surface_add_vertex(bobber_position)
+	line_mesh.surface_add_vertex(anchor_position)
+	line_mesh.surface_end()
