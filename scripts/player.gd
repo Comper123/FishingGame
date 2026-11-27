@@ -114,7 +114,8 @@ func catch_fish() -> void:
 	
 	var fish_name := String(fish["name"])
 	var fish_weight := randf_range(float(fish["min_weight"]), float(fish["max_weight"]))
-	var caught_fish := CaughtFish.new(fish_name, fish_weight)
+	var fish_icon := fish["icon"] as Texture2D
+	var caught_fish := CaughtFish.new(fish_name, fish_weight, fish_icon)
 	var was_added := fishing_inventory.add_fish(caught_fish)
 	if was_added:
 		show_catch_message(caught_fish.species_name, caught_fish.weight)

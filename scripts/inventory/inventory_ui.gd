@@ -3,16 +3,19 @@ extends PanelContainer
 
 
 @export var inventory: FishingInventory
-
-@onready var capacity_label: Label = ($ContentMargin/Content/CapacityLabel)
-@onready var fish_list: VBoxContainer = ($ContentMargin/Content/FishScroll/FishList)
+@export var fish_card_scene: PackedScene
 
 
-func _ready() -> void:
+@onready var capacity_label: Label = ($ScreenMargin/MainLayout/Sidebar/CapacityLabel)
+@onready var fish_grid: GridContainer  = ($ScreenMargin/MainLayout/MainContent/FishScroll/FishGrid)
+@onready var close_button: Button = ($ScreenMargin/MainLayout/MainContent/Header/CloseButton)
+
+func _ready() -> void:	
 	hide()
 	if inventory == null:
 		push_error("Inventory не назначен в InventoryUI")
 		return
+	close_button.pressed.connect(close_inventory)
 	inventory.inventory_changed.connect(refresh_inventory)
 	refresh_inventory()
 	
@@ -20,6 +23,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
 		toggle_inventory()
+
 
 # Управление видимостью инвентаря
 func toggle_inventory() -> void:
@@ -37,11 +41,16 @@ func refresh_inventory() -> void:
 	capacity_label.text = "Рыба: %d / %d" % [inventory.get_count(), inventory.capacity]
 	
 	for fish in inventory.get_items():
-		var fish_label := Label.new()
-		fish_label.text = fish.get_display_text()
-		fish_list.add_child(fish_label)
+		var card := fish_card_scene.instantiate() as FishCard
+		fish_grid.add_child(card)
+		card.setup(fish, fish.icon)
 
 
 func clear_fish_list() -> void:
-	for child in fish_list.get_children():
+	for child in fish_grid.get_children():
 		child.queue_free()
+
+
+func close_inventory() -> void:
+	hide()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

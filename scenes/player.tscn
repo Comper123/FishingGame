@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://nd80c1xntqil" path="res://scenes/bobber.tscn" id="2_g2els"]
 [ext_resource type="Script" uid="uid://begayj0omo2" path="res://scripts/inventory/inventory_ui.gd" id="3_dqkch"]
 [ext_resource type="Script" uid="uid://l006pwvfocv1" path="res://scripts/inventory/fishing_inventory.gd" id="3_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://ddxnwf2ro24vm" path="res://scenes/ui/fish_card.tscn" id="4_qlg0r"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1vivr"]
 
@@ -53,6 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_dqkch")
 inventory = NodePath("../../FishingInventory")
+fish_card_scene = ExtResource("4_qlg0r")
 
 [node name="ScreenMargin" type="MarginContainer" parent="HUD/InventoryPanel" unique_id=1600958309]
 layout_mode = 2
@@ -66,12 +68,14 @@ layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/Sidebar" unique_id=259322016]
 layout_mode = 2
+text = "Садок"
 
 [node name="CapacityLabel" type="Label" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/Sidebar" unique_id=1493010204]
 layout_mode = 2
 
 [node name="SearchInput" type="LineEdit" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/Sidebar" unique_id=1419788767]
 layout_mode = 2
+placeholder_text = "Поиск рыбы..."
 
 [node name="SpeciesFilter" type="OptionButton" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/Sidebar" unique_id=1420245042]
 layout_mode = 2
@@ -88,12 +92,19 @@ layout_mode = 2
 
 [node name="SectionTitle" type="Label" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent/Header" unique_id=492287746]
 layout_mode = 2
+text = "Улов"
+
+[node name="HeaderSpacer" type="Control" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent/Header" unique_id=293567194]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="CloseButton" type="Button" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent/Header" unique_id=191106846]
 layout_mode = 2
+text = "×"
 
 [node name="FishScroll" type="ScrollContainer" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent" unique_id=1144430451]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="FishGrid" type="GridContainer" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent/FishScroll" unique_id=1664015906]
 layout_mode = 2

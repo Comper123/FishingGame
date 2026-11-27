@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://ddxnwf2ro24vm"]
 
+[ext_resource type="Script" uid="uid://8bjinoyh6huv" path="res://scripts/inventory/fish_card.gd" id="1_uev4r"]
+
 [node name="FishCard" type="PanelContainer" unique_id=923555556]
 custom_minimum_size = Vector2(160, 210)
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_uev4r")
 
 [node name="CardMargin" type="MarginContainer" parent="." unique_id=1727928132]
 layout_mode = 2
@@ -14,6 +17,8 @@ layout_mode = 2
 [node name="FishImage" type="TextureRect" parent="CardMargin/CardContent" unique_id=1247645710]
 custom_minimum_size = Vector2(140, 130)
 layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="FishNameLabel" type="Label" parent="CardMargin/CardContent" unique_id=1242728703]
 layout_mode = 2
