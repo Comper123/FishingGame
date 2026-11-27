@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://bnmbqf0vh2d0k" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="PackedScene" uid="uid://nd80c1xntqil" path="res://scenes/bobber.tscn" id="2_g2els"]
 [ext_resource type="Script" uid="uid://begayj0omo2" path="res://scripts/inventory/inventory_ui.gd" id="3_dqkch"]
+[ext_resource type="Resource" uid="uid://ddyal3h2uq40y" path="res://data/equipment/lines/starter_mono_line.tres" id="3_fjrip"]
 [ext_resource type="Script" uid="uid://l006pwvfocv1" path="res://scripts/inventory/fishing_inventory.gd" id="3_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://ddxnwf2ro24vm" path="res://scenes/ui/fish_card.tscn" id="4_qlg0r"]
+[ext_resource type="Script" uid="uid://o31av825fcqy" path="res://scripts/equipment/fishing_loadout.gd" id="6_tuyoq"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1vivr"]
 
@@ -16,6 +18,7 @@ bg_color = Color(0.2044166, 0.19769421, 0.1808894, 1)
 [node name="Player" type="CharacterBody3D" unique_id=1836711902]
 script = ExtResource("1_3vyb7")
 bobber_scene = ExtResource("2_g2els")
+starter_line = ExtResource("3_fjrip")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1201757446]
 mesh = SubResource("CapsuleMesh_1vivr")
@@ -112,10 +115,13 @@ size_flags_vertical = 3
 
 [node name="FishGrid" type="GridContainer" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent/FishScroll" unique_id=1664015906]
 layout_mode = 2
-columns = 4
+columns = 6
 
 [node name="HintLabel" type="Label" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent" unique_id=2074076610]
 layout_mode = 2
 
 [node name="FishingInventory" type="Node" parent="." unique_id=722294027]
 script = ExtResource("3_qhqgy")
+
+[node name="FishingLoadout" type="Node" parent="." unique_id=1539668564]
+script = ExtResource("6_tuyoq")

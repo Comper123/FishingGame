@@ -8,6 +8,9 @@ extends CharacterBody3D
 @export var cast_force: float = 10.0
 @export var cast_upward_force: float = 2.5
 
+@export var starter_line: LineData
+@onready var fishing_loadout: FishingLoadout = ($FishingLoadout)
+
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var cast_origin: Marker3D = $CameraPivot/CastOrigin
 @onready var catch_label: Label = $HUD/CatchLabel
@@ -27,6 +30,8 @@ func _ready() -> void:
 	message_timer.timeout.connect(_on_message_timer_timeout)
 	inventory_ui.inventory_opened.connect(_on_inventory_opened)
 	inventory_ui.inventory_closed.connect(_on_inventory_closed)
+	if starter_line != null:
+		fishing_loadout.equip_line(starter_line)
 
 
 func _unhandled_input(event: InputEvent) -> void:

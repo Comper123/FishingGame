@@ -10,6 +10,10 @@ script = ExtResource("1_uev4r")
 
 [node name="CardMargin" type="MarginContainer" parent="." unique_id=1727928132]
 layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
 [node name="CardContent" type="VBoxContainer" parent="CardMargin" unique_id=1500426520]
 layout_mode = 2

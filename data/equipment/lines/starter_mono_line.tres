@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LineData" format=3 uid="uid://ddyal3h2uq40y"]
+
+[ext_resource type="Script" uid="uid://cyqfptlg22jjm" path="res://scripts/equipment/line_data.gd" id="1_8frgs"]
+
+[resource]
+script = ExtResource("1_8frgs")
+id = &"starter_mono_line"
+display_name = "Стартовая монофильная леска"
+description = "Простая леска для начинающего рыболова."
+metadata/_custom_type_script = "uid://cyqfptlg22jjm"
