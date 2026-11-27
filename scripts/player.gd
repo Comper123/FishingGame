@@ -13,21 +13,25 @@ extends CharacterBody3D
 @onready var catch_label: Label = $HUD/CatchLabel
 @onready var message_timer: Timer = $HUD/MessageTimer
 @onready var fishing_inventory: FishingInventory = $FishingInventory
+@onready var inventory_ui: InventoryUI = ($HUD/InventoryPanel)
+
 
 var current_bobber: Bobber = null     # Текущий поплавок
-
-var gravity: float = float(
-	ProjectSettings.get_setting("physics/3d/default_gravity")
-)
+var gravity: float = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
+var is_gameplay_blocked: bool = false
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	catch_label.hide()
 	message_timer.timeout.connect(_on_message_timer_timeout)
+	inventory_ui.inventory_opened.connect(_on_inventory_opened)
+	inventory_ui.inventory_closed.connect(_on_inventory_closed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if is_gameplay_blocked:
+		return
 	if (event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED):
 		rotate_y(-event.relative.x * mouse_sensetivity)
 		camera_pivot.rotate_x(-event.relative.y * mouse_sensetivity)
@@ -51,6 +55,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
+	
+	if is_gameplay_blocked:
+		velocity.x = move_toward(velocity.x, 0.0, acceleration * delta)
+		velocity.z = move_toward(velocity.z, 0.0, acceleration * delta)
+		move_and_slide()
+		return
 	handle_jump()
 	handle_movement(delta)
 	move_and_slide()
@@ -139,4 +149,9 @@ func show_message(message: String) -> void:
 	
 func _on_message_timer_timeout() -> void:
 	catch_label.hide()
-	
+
+func _on_inventory_opened() -> void:
+	is_gameplay_blocked = true
+
+func _on_inventory_closed() -> void:
+	is_gameplay_blocked = false

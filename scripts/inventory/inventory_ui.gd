@@ -1,6 +1,8 @@
 class_name InventoryUI
 extends PanelContainer
 
+signal inventory_opened
+signal inventory_closed
 
 @export var inventory: FishingInventory
 @export var fish_card_scene: PackedScene
@@ -9,6 +11,7 @@ extends PanelContainer
 @onready var capacity_label: Label = ($ScreenMargin/MainLayout/Sidebar/CapacityLabel)
 @onready var fish_grid: GridContainer  = ($ScreenMargin/MainLayout/MainContent/FishScroll/FishGrid)
 @onready var close_button: Button = ($ScreenMargin/MainLayout/MainContent/Header/CloseButton)
+
 
 func _ready() -> void:	
 	hide()
@@ -23,16 +26,18 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
 		toggle_inventory()
+		get_viewport().set_input_as_handled()
+	elif (visible and event.is_action_pressed("ui_cancel")):
+		close_inventory()
+		get_viewport().set_input_as_handled()
 
 
 # Управление видимостью инвентаря
 func toggle_inventory() -> void:
-	visible = not visible
 	if visible:
-		refresh_inventory()
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		close_inventory()
 	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		open_inventory()
 		
 
 func refresh_inventory() -> void:
@@ -51,6 +56,14 @@ func clear_fish_list() -> void:
 		child.queue_free()
 
 
+func open_inventory() -> void:
+	show()
+	refresh_inventory()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	inventory_opened.emit()
+
+
 func close_inventory() -> void:
 	hide()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	inventory_closed.emit()

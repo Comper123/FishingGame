@@ -10,6 +10,9 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8vrlf"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlg0r"]
+bg_color = Color(0.2044166, 0.19769421, 0.1808894, 1)
+
 [node name="Player" type="CharacterBody3D" unique_id=1836711902]
 script = ExtResource("1_3vyb7")
 bobber_scene = ExtResource("2_g2els")
@@ -52,6 +55,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qlg0r")
 script = ExtResource("3_dqkch")
 inventory = NodePath("../../FishingInventory")
 fish_card_scene = ExtResource("4_qlg0r")
