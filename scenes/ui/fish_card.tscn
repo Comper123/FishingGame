@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ddxnwf2ro24vm"]
+
+[node name="FishCard" type="PanelContainer" unique_id=923555556]
+custom_minimum_size = Vector2(160, 210)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CardMargin" type="MarginContainer" parent="." unique_id=1727928132]
+layout_mode = 2
+
+[node name="CardContent" type="VBoxContainer" parent="CardMargin" unique_id=1500426520]
+layout_mode = 2
+
+[node name="FishImage" type="TextureRect" parent="CardMargin/CardContent" unique_id=1247645710]
+custom_minimum_size = Vector2(140, 130)
+layout_mode = 2
+
+[node name="FishNameLabel" type="Label" parent="CardMargin/CardContent" unique_id=1242728703]
+layout_mode = 2
+
+[node name="FishWeightLabel" type="Label" parent="CardMargin/CardContent" unique_id=1817593204]
+layout_mode = 2

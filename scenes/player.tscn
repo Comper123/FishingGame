@@ -46,38 +46,61 @@ one_shot = true
 
 [node name="InventoryPanel" type="PanelContainer" parent="HUD" unique_id=1246194017 node_paths=PackedStringArray("inventory")]
 visible = false
-custom_minimum_size = Vector2(360, 420)
-offset_left = 30.0
-offset_top = 80.0
-offset_right = 246.0
-offset_bottom = 161.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("3_dqkch")
 inventory = NodePath("../../FishingInventory")
 
-[node name="ContentMargin" type="MarginContainer" parent="HUD/InventoryPanel" unique_id=1600958309]
+[node name="ScreenMargin" type="MarginContainer" parent="HUD/InventoryPanel" unique_id=1600958309]
 layout_mode = 2
 
-[node name="Content" type="VBoxContainer" parent="HUD/InventoryPanel/ContentMargin" unique_id=2039609480]
+[node name="MainLayout" type="HBoxContainer" parent="HUD/InventoryPanel/ScreenMargin" unique_id=1283470434]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="HUD/InventoryPanel/ContentMargin/Content" unique_id=1021318544]
-layout_mode = 2
-text = "Инвентарь"
-
-[node name="CapacityLabel" type="Label" parent="HUD/InventoryPanel/ContentMargin/Content" unique_id=1685214613]
-layout_mode = 2
-text = "Рыба: 0 / 20"
-
-[node name="FishScroll" type="ScrollContainer" parent="HUD/InventoryPanel/ContentMargin/Content" unique_id=1649032451]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="FishList" type="VBoxContainer" parent="HUD/InventoryPanel/ContentMargin/Content/FishScroll" unique_id=136204287]
+[node name="Sidebar" type="VBoxContainer" parent="HUD/InventoryPanel/ScreenMargin/MainLayout" unique_id=681720812]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
-[node name="HintLabel" type="Label" parent="HUD/InventoryPanel/ContentMargin/Content" unique_id=955944607]
+[node name="TitleLabel" type="Label" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/Sidebar" unique_id=259322016]
 layout_mode = 2
-text = "Нажмите I, чтобы закрыть"
+
+[node name="CapacityLabel" type="Label" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/Sidebar" unique_id=1493010204]
+layout_mode = 2
+
+[node name="SearchInput" type="LineEdit" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/Sidebar" unique_id=1419788767]
+layout_mode = 2
+
+[node name="SpeciesFilter" type="OptionButton" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/Sidebar" unique_id=1420245042]
+layout_mode = 2
+
+[node name="SortButton" type="OptionButton" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/Sidebar" unique_id=31243357]
+layout_mode = 2
+
+[node name="MainContent" type="VBoxContainer" parent="HUD/InventoryPanel/ScreenMargin/MainLayout" unique_id=751383484]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="HBoxContainer" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent" unique_id=435834901]
+layout_mode = 2
+
+[node name="SectionTitle" type="Label" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent/Header" unique_id=492287746]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent/Header" unique_id=191106846]
+layout_mode = 2
+
+[node name="FishScroll" type="ScrollContainer" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent" unique_id=1144430451]
+layout_mode = 2
+
+[node name="FishGrid" type="GridContainer" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent/FishScroll" unique_id=1664015906]
+layout_mode = 2
+columns = 4
+
+[node name="HintLabel" type="Label" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent" unique_id=2074076610]
+layout_mode = 2
 
 [node name="FishingInventory" type="Node" parent="." unique_id=722294027]
 script = ExtResource("3_qhqgy")
