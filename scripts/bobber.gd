@@ -35,7 +35,7 @@ var released_line_length: float = 0.0   # выпущенная длина
 var current_tension: float = 0.0        # текущее натяжение
 
 var is_in_water: bool = false
-var water_surface_y: float = 0.0
+var water_surface_y: float = 0.0	
 
 var default_linear_damp: float
 var defaul_angular_damp: float 
@@ -191,3 +191,13 @@ func update_line_visual() -> void:
 	line_mesh.surface_add_vertex(bobber_position)
 	line_mesh.surface_add_vertex(anchor_position)
 	line_mesh.surface_end()
+
+
+# Расчет нагрузки на леску
+func get_tension_ratio() -> float:
+	if line_data == null:
+		return 0.0
+	var breaking_force := (line_data.breaking_strength_kg * 9.81)
+	if breaking_force <= 0.0:
+		return 0.0
+	return current_tension / breaking_force

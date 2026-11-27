@@ -19,6 +19,7 @@ extends CharacterBody3D
 @onready var message_timer: Timer = $HUD/MessageTimer
 @onready var fishing_inventory: FishingInventory = $FishingInventory
 @onready var inventory_ui: InventoryUI = ($HUD/InventoryPanel)
+@onready var tension_bar: ProgressBar = ($HUD/TensionBar)
 
 
 var current_bobber: Bobber = null     # Текущий поплавок
@@ -34,6 +35,7 @@ func _ready() -> void:
 	inventory_ui.inventory_closed.connect(_on_inventory_closed)
 	if starter_line != null:
 		fishing_loadout.equip_line(starter_line)
+	tension_bar.hide()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -61,6 +63,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	update_tension_ui()
 	apply_gravity(delta)
 	
 	if is_gameplay_blocked:
@@ -170,5 +173,16 @@ func _on_inventory_closed() -> void:
 func handle_reeling(delta: float) -> void:
 	if not is_instance_valid(current_bobber):
 		return
-	if Input.is_action_just_pressed("reel_in"):
+	if Input.is_action_pressed("reel_in"):
 		current_bobber.reel_in(reel_speed * delta)
+
+
+# Обновление индикатора натяжения лески
+func update_tension_ui() -> void:
+	if not is_instance_valid(current_bobber):
+		tension_bar.hide()
+		tension_bar.value = 0.0
+		return
+	var tension_ratio := (current_bobber.get_tension_ratio())
+	tension_bar.value = clampf(tension_ratio * 100.0, 0.0, 100.0)
+	tension_bar.show()

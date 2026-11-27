@@ -120,6 +120,12 @@ columns = 6
 [node name="HintLabel" type="Label" parent="HUD/InventoryPanel/ScreenMargin/MainLayout/MainContent" unique_id=2074076610]
 layout_mode = 2
 
+[node name="TensionBar" type="ProgressBar" parent="HUD" unique_id=1277386736]
+visible = false
+offset_right = 300.0
+offset_bottom = 20.0
+show_percentage = false
+
 [node name="FishingInventory" type="Node" parent="." unique_id=722294027]
 script = ExtResource("3_qhqgy")
 
