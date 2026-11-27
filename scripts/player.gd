@@ -7,9 +7,11 @@ extends CharacterBody3D
 @export var bobber_scene: PackedScene
 @export var cast_force: float = 10.0
 @export var cast_upward_force: float = 2.5
+@export var reel_speed: float = 3.0
 
-@export var starter_line: LineData
-@onready var fishing_loadout: FishingLoadout = ($FishingLoadout)
+@export var cast_line_length: float = 15.0                          # длина вымотанной лески
+@export var starter_line: LineData                                  # леска
+@onready var fishing_loadout: FishingLoadout = ($FishingLoadout)    # актуальный комплект для ловли в руках
 
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var cast_origin: Marker3D = $CameraPivot/CastOrigin
@@ -101,15 +103,17 @@ func cast_bobber() -> void:
 		push_warning("Bobber Scene не назначена")
 		return
 	
+	if not fishing_loadout.has_line():
+		show_message("Сначала установите леску")
+		return
+		
 	current_bobber = bobber_scene.instantiate() as Bobber
-	
 	get_tree().current_scene.add_child(current_bobber)
+	current_bobber.setup_line(cast_origin, fishing_loadout.line, cast_line_length)
 	
 	current_bobber.global_position = cast_origin.global_position
 	current_bobber.global_rotation = cast_origin.global_rotation
-	
 	var forward := -cast_origin.global_basis.z
-	
 	current_bobber.apply_central_impulse(forward * cast_force + Vector3.UP * cast_upward_force)
 
 

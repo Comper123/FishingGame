@@ -23,6 +23,13 @@ enum FishingState {
 
 @onready var bite_timer: Timer = $BiteTimer
 
+@export var line_stiffness: float = 20.0       # насколько сильно леска возвращает поплавок
+@export var line_damping: float = 3.0          # гашение колебаний
+
+var line_anchor: Node3D                 # точка, к которой привязана леска
+var line_data: LineData                 # экипированный вид лески
+var released_line_length: float = 0.0   # выпущенная длина
+var current_tension: float = 0.0        # текущее натяжение
 
 var is_in_water: bool = false
 var water_surface_y: float = 0.0
@@ -40,16 +47,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not is_in_water:
-		return
-	
-	var depth := water_surface_y - global_position.y
-	
-	if depth <= 0.0:
-		return
-		
-	var submerged_amount := clampf(depth / submerged_depth, 0.0, 1.0)
-	apply_central_force(Vector3.UP * buoyancy_strength * submerged_amount)
+	apply_buoyancy()
+	apply_line_tension()
 	
 	
 func enter_water(surface_y: float) -> void:
@@ -114,3 +113,39 @@ func try_hook() -> bool:
 	bite_timer.stop()
 	print("Успешная подсечка")
 	return true
+
+
+# Установка лески
+func setup_line(anchor: Node3D, equipped_line: LineData, requested_length: float) -> void:
+	line_anchor = anchor
+	line_data = equipped_line
+	released_line_length = minf(requested_length, equipped_line.length_m)
+	
+
+# Функция плавучести
+func apply_buoyancy() -> void:
+	if not is_in_water:
+		return
+	var depth := water_surface_y - global_position.y
+	if depth <= 0.0:
+		return
+	var submerged_amount := clampf(depth / submerged_depth, 0.0, 1.0)
+	apply_central_force(Vector3.UP * buoyancy_strength * submerged_amount)
+
+
+# Функция натяжения нити
+func apply_line_tension() -> void:
+	if line_anchor == null:
+		current_tension = 0.0
+		return
+	var distance := global_position.distance_to(line_anchor.global_position)
+	var stretch := distance - released_line_length
+	if stretch <= 0.0:
+		current_tension = 0.0
+		return
+	var pull_direction := global_position.direction_to(line_anchor.global_position)
+	current_tension = stretch * line_stiffness
+	var spring_force := (pull_direction * current_tension)
+	var radial_velocity := linear_velocity.project(pull_direction)
+	var damping_force := (-radial_velocity * line_damping)
+	apply_central_force(spring_force + damping_force)
