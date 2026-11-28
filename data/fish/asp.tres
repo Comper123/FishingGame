@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishData" format=3 uid="uid://kaemysvxxilv"]
+
+[ext_resource type="Script" uid="uid://chsqvsqyd5mik" path="res://scripts/data/fish_data.gd" id="1_nqsnp"]
+[ext_resource type="Texture2D" uid="uid://2togau4n5x2o" path="res://assets/fish/asp.png" id="1_ykqs1"]
+
+[resource]
+script = ExtResource("1_nqsnp")
+id = &"asp"
+display_name = "Жерех"
+description = "Быстрый и мощный речной хищник. Охотится у поверхности и считается непростой добычей для рыболова."
+icon = ExtResource("1_ykqs1")
+min_weight_kg = 0.3
+max_weight_kg = 12.0
+metadata/_custom_type_script = "uid://chsqvsqyd5mik"

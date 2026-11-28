@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishData" format=3 uid="uid://x5171ad8mke7"]
+
+[ext_resource type="Script" uid="uid://chsqvsqyd5mik" path="res://scripts/data/fish_data.gd" id="1_5tgag"]
+[ext_resource type="Texture2D" uid="uid://cvt3hokts1aaa" path="res://assets/fish/ide.png" id="1_d25yk"]
+
+[resource]
+script = ExtResource("1_5tgag")
+id = &"ide"
+display_name = "Язь"
+description = "Сильная и осторожная всеядная рыба. Крупные особи предпочитают глубокие места и участки возле течения."
+icon = ExtResource("1_d25yk")
+min_weight_kg = 0.2
+max_weight_kg = 4.0
+metadata/_custom_type_script = "uid://chsqvsqyd5mik"

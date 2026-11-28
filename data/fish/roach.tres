@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishData" format=3 uid="uid://b2mxq4mtoej0h"]
+
+[ext_resource type="Texture2D" uid="uid://c4yyixok7r1nh" path="res://assets/fish/roach.png" id="1_etc6q"]
+[ext_resource type="Script" uid="uid://chsqvsqyd5mik" path="res://scripts/data/fish_data.gd" id="1_jdgah"]
+
+[resource]
+script = ExtResource("1_jdgah")
+id = &"roach"
+display_name = "Плотва"
+description = "Распространённая стайная рыба. Обитает в озёрах и реках со спокойным или умеренным течением."
+icon = ExtResource("1_etc6q")
+min_weight_kg = 0.05
+max_weight_kg = 1.5
+metadata/_custom_type_script = "uid://chsqvsqyd5mik"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishData" format=3 uid="uid://cbcstjlb3aidd"]
+
+[ext_resource type="Script" uid="uid://chsqvsqyd5mik" path="res://scripts/data/fish_data.gd" id="1_civj8"]
+[ext_resource type="Texture2D" uid="uid://b243ddon14h8n" path="res://assets/fish/ruffe.png" id="1_hl3o0"]
+
+[resource]
+script = ExtResource("1_civj8")
+id = &"ruffe"
+display_name = "Ёрш"
+description = "Небольшая донная рыба с колючим спинным плавником. Часто встречается на глубине и в затенённых местах."
+icon = ExtResource("1_hl3o0")
+min_weight_kg = 0.02
+max_weight_kg = 0.4
+metadata/_custom_type_script = "uid://chsqvsqyd5mik"

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishData" format=3 uid="uid://cq1mp82dvk0pg"]
+
+[ext_resource type="Texture2D" uid="uid://jouv08cmmorm" path="res://assets/fish/northern_pike.png" id="1_7qj5e"]
+[ext_resource type="Script" uid="uid://chsqvsqyd5mik" path="res://scripts/data/fish_data.gd" id="1_57gsp"]
+
+[resource]
+script = ExtResource("1_57gsp")
+id = &"northern_pike"
+display_name = "Щука"
+description = "Крупный засадный хищник с острыми зубами. Для её ловли потребуется прочная леска и надёжная снасть."
+icon = ExtResource("1_7qj5e")
+min_weight_kg = 0.3
+max_weight_kg = 21.0
+metadata/_custom_type_script = "uid://chsqvsqyd5mik"

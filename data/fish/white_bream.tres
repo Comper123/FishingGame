@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishData" format=3 uid="uid://deb0qxklktfn0"]
+
+[ext_resource type="Script" uid="uid://chsqvsqyd5mik" path="res://scripts/data/fish_data.gd" id="1_uucwy"]
+[ext_resource type="Texture2D" uid="uid://ckg7k3qinpb4n" path="res://assets/fish/white_bream.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_uucwy")
+id = &"white_bream"
+display_name = "Густера"
+description = "Стайная рыба, внешне напоминающая молодого леща. Предпочитает спокойные участки водоёма."
+icon = ExtResource("2_icon")
+min_weight_kg = 0.05
+max_weight_kg = 1.2
+metadata/_custom_type_script = "uid://chsqvsqyd5mik"

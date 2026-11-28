@@ -26,6 +26,8 @@ var current_bobber: Bobber = null     # Текущий поплавок
 var gravity: float = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 var is_gameplay_blocked: bool = false
 
+var tension_fill_style: StyleBoxFlat
+
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -35,6 +37,14 @@ func _ready() -> void:
 	inventory_ui.inventory_closed.connect(_on_inventory_closed)
 	if starter_line != null:
 		fishing_loadout.equip_line(starter_line)
+
+	# Готовим прогресс бар нагрузки на леску
+	var original_style := tension_bar.get_theme_stylebox("fill")
+	if original_style is StyleBoxFlat:
+		tension_fill_style = original_style.duplicate() as StyleBoxFlat
+	else:
+		tension_fill_style = StyleBoxFlat.new()
+	tension_bar.add_theme_stylebox_override("fill", tension_fill_style)
 	tension_bar.hide()
 
 
@@ -133,12 +143,10 @@ func retrieve_bobber() -> void:
 
 # Поимка рыбы
 func catch_fish() -> void:
-	var fish: Dictionary = FishCatalog.get_random_fish()
+	var fish: FishData = FishCatalog.get_random_fish()
 	
-	var fish_name := String(fish["name"])
-	var fish_weight := randf_range(float(fish["min_weight"]), float(fish["max_weight"]))
-	var fish_icon := fish["icon"] as Texture2D
-	var caught_fish := CaughtFish.new(fish_name, fish_weight, fish_icon)
+	var fish_weight := randf_range(fish.min_weight_kg, fish.max_weight_kg)
+	var caught_fish := CaughtFish.new(fish.display_name, fish_weight, fish.icon)
 	var was_added := fishing_inventory.add_fish(caught_fish)
 	if was_added:
 		show_catch_message(caught_fish.species_name, caught_fish.weight)
@@ -180,9 +188,22 @@ func handle_reeling(delta: float) -> void:
 # Обновление индикатора натяжения лески
 func update_tension_ui() -> void:
 	if not is_instance_valid(current_bobber):
-		tension_bar.hide()
 		tension_bar.value = 0.0
+		tension_bar.hide()
 		return
-	var tension_ratio := (current_bobber.get_tension_ratio())
-	tension_bar.value = clampf(tension_ratio * 100.0, 0.0, 100.0)
+	var tension_ratio := clampf(current_bobber.get_tension_ratio(), 0.0, 1.0)
+	tension_bar.value = tension_ratio * 100.0
+	update_tension_color(tension_ratio)
 	tension_bar.show()
+
+
+# Функция смены цвета индикатора натяжения
+func update_tension_color(tension_ratio: float) -> void:
+	if tension_fill_style == null:
+		return
+	if tension_ratio < 0.5:
+		tension_fill_style.bg_color = Color('#3FC56B')
+	elif tension_ratio < 0.8:
+		tension_fill_style.bg_color = Color('#F2C94C')
+	else:
+		tension_fill_style.bg_color = Color('#E5484D')

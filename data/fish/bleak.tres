@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishData" format=3 uid="uid://nihefiyakjju"]
+
+[ext_resource type="Texture2D" uid="uid://dlten3jpuk1e" path="res://assets/fish/bleak.png" id="1_0iapb"]
+[ext_resource type="Script" uid="uid://chsqvsqyd5mik" path="res://scripts/data/fish_data.gd" id="1_on1ch"]
+
+[resource]
+script = ExtResource("1_on1ch")
+id = &"bleak"
+display_name = "Уклейка"
+description = "Маленькая и быстрая стайная рыба. Обычно держится возле поверхности воды и активно хватает лёгкую приманку."
+icon = ExtResource("1_0iapb")
+min_weight_kg = 0.02
+max_weight_kg = 0.2
+metadata/_custom_type_script = "uid://chsqvsqyd5mik"

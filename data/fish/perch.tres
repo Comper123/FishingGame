@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishData" format=3 uid="uid://bj7lic2t7x1hx"]
+
+[ext_resource type="Texture2D" uid="uid://bplxy705mkjhr" path="res://assets/fish/perch.png" id="1_lrwkk"]
+[ext_resource type="Script" uid="uid://chsqvsqyd5mik" path="res://scripts/data/fish_data.gd" id="1_r86lb"]
+
+[resource]
+script = ExtResource("1_r86lb")
+id = &"perch"
+display_name = "Окунь"
+description = "Полосатый пресноводный хищник. Часто держится возле растительности, коряг и других укрытий."
+icon = ExtResource("1_lrwkk")
+min_weight_kg = 0.15
+max_weight_kg = 2.0
+metadata/_custom_type_script = "uid://chsqvsqyd5mik"

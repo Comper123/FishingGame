@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FishData" format=3 uid="uid://2vs6iipyxvq2"]
+
+[ext_resource type="Texture2D" uid="uid://cvko4gddvy7wy" path="res://assets/fish/crucian_carp.png" id="1_ff7ce"]
+[ext_resource type="Script" uid="uid://chsqvsqyd5mik" path="res://scripts/data/fish_data.gd" id="1_yvh8x"]
+
+[resource]
+script = ExtResource("1_yvh8x")
+id = &"crucian_carp"
+display_name = "Карась"
+description = "Обычная пресноводная рыба."
+icon = ExtResource("1_ff7ce")
+min_weight_kg = 0.2
+max_weight_kg = 1.5
+metadata/_custom_type_script = "uid://chsqvsqyd5mik"
